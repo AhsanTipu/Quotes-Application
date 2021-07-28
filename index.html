@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" >
+
+    <title>QuotesApp</title>
+</head>
+
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+    body{
+        background-color: rgb(51, 51, 51);
+        font-family: 'Gowun Dodum', sans-serif;
+    }
+    .box{
+        width: 40%;
+        display: block;
+        margin: auto;
+        margin-top: 180px;
+        border-radius: 10px;
+        height: 400px;
+        background: linear-gradient(180deg,red,black);
+    }
+    .fa-quote-left{
+        color: white;
+        font-size: 30px;
+        padding-left: 30px;
+        padding-top: 30px;
+    }
+    .h3q{
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+text-align: center;
+        padding-top: 30px;
+    }
+    #quo{
+        display: block;
+        margin: auto;
+        background-color: rgb(61, 61, 61) !important;
+    
+        border-color: rgb(61, 61, 61);
+    }
+    #autor{
+        color: rgb(231, 231, 231);
+        font-size: 20px;
+        text-align: center;
+    }
+    .h3a{
+        color: gainsboro;
+        text-align: center;
+        font-size: 15px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+
+    }
+    .fa-quote-right{
+        color: white;
+        font-size: 30px;
+        padding-top: 30px;
+        /* text-align: right; */
+        float: right;
+        padding-right: 30px;
+    }
+    #quotes{
+        padding-top: 40px;
+    font-size: 23px;
+    font-weight: bold;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    color: #e4dede;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+    #btnt{
+        background-color: rgb(61, 61, 61) !important;
+        border-color: transparent !important;
+        float: right;
+        border-radius: 50% 7%;
+        
+    }
+    @media (min-width:360px) and (max-width : 767px){
+.box{
+    width: 90%;
+    margin-top: 130px;
+}
+
+
+    }
+</style>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+<div class="box">
+    <button type="button" onclick="tweet()" id="btnt" class="btn btn-primary"><i class="fab fa-twitter" style="color: white;"></i></button>
+    <br>
+    <i class="fas fa-quote-left"></i>
+    <div id="qmm"><h3 id="quotes"></h3></div>
+    <div ><h5 id="author" class="h3a"></h5></div>
+    <button type="button" class="btn btn-primary" id="quo" onclick="getQuote()">New Quote</button>
+    <i class="fas fa-quote-right"></i>
+</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const quote=document.getElementById('quotes');
+        const author=document.getElementById('author');
+let realdata="";
+let quodata="";
+const getQuote=()=>{
+const rnum=Math.floor(Math.random()*30);
+quodata=realdata[rnum];
+quote.innerHTML=`${quodata.text}`;
+if(quodata.author == null){
+    author.innerHTML="Unknown"
+}else{
+author.innerHTML=`~${quodata.author}~`;}
+// quote.innerHTml=`${realdata[rnum].text}`;
+}
+
+        const getQuotes=async ()=>{
+            // const api="";
+try{
+let data= await fetch('https://type.fit/api/quotes');
+realdata=await data.json();
+// console.log(realdata[10].text)
+getQuote();
+}
+catch(error){
+    console.log(error)
+}
+
+        }
+const tweet=()=>{
+    const twi=`https://twitter.com/intent/tweet?text=${quodata.text} ${quodata.author}`;
+    window.open(twi);
+}
+
+        getQuotes();
+    </script>
+</body>
+</html>
